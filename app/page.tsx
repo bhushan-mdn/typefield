@@ -1,11 +1,10 @@
+'use client'
+
+import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react';
-import './App.css';
 import { CursorArrowRaysIcon, ArrowPathIcon, NewspaperIcon } from '@heroicons/react/24/solid';
 
-// declare window: any;
-
-function App() {
-
+export default function Home() {
   const [typedContent, setTypedContent] = useState("");
   const [content, setContent] = useState("");
   const [focused, setFocused] = useState(false);
@@ -28,29 +27,42 @@ function App() {
   }
 
   return (
-    <div className="App bg-black h-screen flex flex-col">
-      <div className='flex items-center justify-between text-white bg-slate-900 p-5'>
-        <p className='text-3xl font-bold text-blue-100'>TypeField</p>
-        <button className='btn btn-primary' onClick={changeContent}>
-          <NewspaperIcon className='h-4 w-4' /> Change content
-        </button>
-      </div>
-      <h1 className="my-5 text-8xl font-extrabold text-transparent text-center bg-clip-text bg-gradient-to-r from-purple-500 to-pink-400">
-        not a side quest
-      </h1>
+    <div className="bg-black min-h-screen flex flex-col">
+      {/* <h1 className="my-5 text-8xl font-extrabold text-transparent text-center bg-clip-text bg-gradient-to-r from-purple-500 to-pink-400">
+                not a side quest
+            </h1> */}
+      {/* <div className="stats shadow">
+        <div className="stat place-items-center">
+          <div className="stat-title">WPM</div>
+          <div className="stat-value">100</div>
+          <div className="stat-desc">Words Per Minute</div>
+        </div>
+
+        <div className="stat place-items-center">
+          <div className="stat-title">Accuracy</div>
+          <div className="stat-value text-green-500">100%</div>
+          <div className="stat-desc text-secondary">How accurate are you?</div>
+        </div>
+
+        <div className="stat place-items-center">
+          <div className="stat-title">Score</div>
+          <div className="stat-value">1,200</div>
+          <div className="stat-desc">Your typing score</div>
+        </div>
+      </div> */}
       <div className='container mx-auto border-solid border-green-400'>
         <input
           name="content"
           id="content"
           type="text"
           className='p-3 pointer-events-none absolute opacity-0'
-          autoFocus
           placeholder='Start typing here...'
           onChange={(e) => updateContent(e.currentTarget.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           value={typedContent}
           ref={inputRef}
+          autoFocus
         />
         <div>
           <div className={`text-4xl font-mono ${focused ? 'opacity-0' : ''} text-center relative z-10 w-full h-full`}>
@@ -58,9 +70,9 @@ function App() {
               <CursorArrowRaysIcon className='h-6 w-6' /> Click to focus again
             </div>
           </div>
-          <p className={`tracking-wider text-3xl font-bold ${focused ? '' : 'blur-sm'} z-0`} onClick={() => { inputRef.current && inputRef.current.focus() }}>
+          <p className={`tracking-wider text-3xl font-bold ${focused ? '' : 'blur-sm'} z-0`} onClick={() => { inputRef.current && !focused && inputRef.current.focus() }}>
             {
-              content.split('').map((letter, idx) => {
+              content.split('').map((letter: string, idx: number) => {
                 return (
                   <>
                     {
@@ -86,12 +98,17 @@ function App() {
           </p>
         </div>
 
-        <div className="actions flex items-center place-content-center my-5">
-          <button className='btn text-center' onClick={() => {setTypedContent("")}}>
+        <div className="actions flex items-center place-content-center my-5 gap-5">
+          <button className='btn text-center' onClick={() => { setTypedContent("") }}>
             <ArrowPathIcon className='h-5 w-5' /> Restart
           </button>
+          <button className='btn btn-primary' onClick={changeContent}>
+            <NewspaperIcon className='h-4 w-4' /> Change content
+          </button>
+
         </div>
       </div>
+
       <dialog id="change_content_modal" className="modal">
         <form method="dialog" className="modal-box">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -115,6 +132,12 @@ function App() {
       </dialog>
     </div>
   );
+  // return (
+  //   <main className="flex min-h-screen flex-col items-center justify-between p-24">
+  //     <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+  //       <p>Hello</p>
+  //       <p>Goodbye</p>
+  //     </div>
+  //   </main>
+  // )
 }
-
-export default App;
